@@ -1,11 +1,5 @@
 from google.appengine.ext import db
-
-# blog stuff
-# data store
-
-
-def blog_key(name='default'):
-    return db.Key.from_path('blogs', name)
+from helper import *
 
 
 class Post(db.Model):

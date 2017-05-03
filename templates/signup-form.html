@@ -1,13 +1,8 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
 
-<html>
-  <head>
-    <title>Sign Up</title>
-    <link type="text/css" rel="stylesheet" href="/static/main.css" />
-  </head>
-
+{% block content %}
   <body>
-    <h2>Signup</h2>
+    <h2>Create Your Account</h2>
     <form method="post">
             Username
             <input type="text" name="username" value="{{username}}">
@@ -26,9 +21,5 @@
             {{error_email}}<br><br>
       <input type="submit">
     </form>
-    <div class="login-area">
-      <a class="login-link" href="/login">Remember your account? Click here to log in.</a>
-    </div>
   </body>
-
-</html>
+{% endblock %}

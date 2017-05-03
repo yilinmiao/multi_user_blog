@@ -14,45 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import os
-import re
-import random
-import hashlib
-import hmac
-from string import letters
-
-
-from models.user import User
+from helper import *
 from models.post import Post
+from models.user import User
+
 
 # from handlers.signup import Signup
-
-import webapp2
-import jinja2
-
-from google.appengine.ext import db
-
-# load all html templates
-template_dir = os.path.join(os.path.dirname(__file__), 'templates')
-jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir),
-                               autoescape=True)
-
-secret = 'aOHhTpP3s7hWzlnOMtdE'
-
-
-def render_str(template, **params):
-    t = jinja_env.get_template(template)
-    return t.render(params)
-
-
-def make_secure_val(val):
-    return '%s|%s' % (val, hmac.new(secret, val).hexdigest())
-
-
-def check_secure_val(secure_val):
-    val = secure_val.split('|')[0]
-    if secure_val == make_secure_val(val):
-        return val
 
 # MainHandler with convenience functions
 
@@ -91,9 +58,9 @@ class BlogHandler(webapp2.RequestHandler):
         self.user = uid and User.by_id(int(uid))
 
 
-def render_post(response, post):
-    response.out.write('<b>' + post.subject + '</b><br>')
-    response.out.write(post.content)
+# def render_post(response, post):
+#     response.out.write('<b>' + post.subject + '</b><br>')
+#     response.out.write(post.content)
 
 
 class BlogFront(BlogHandler):
@@ -102,30 +69,9 @@ class BlogFront(BlogHandler):
         # google's procedural language
         posts = Post.all().order('-created')
         # GQL
-        # posts = db.GqlQuery("select * from Post order by created desc limit 10")
+        # posts = db.GqlQuery(
+        # "select * from Post order by created desc limit 10")
         self.render('front.html', posts=posts)
-
-
-# sign up
-USER_RE = re.compile(r"^[a-zA-Z0-9_-]{3,20}$")
-
-
-def valid_username(username):
-    return username and USER_RE.match(username)
-
-
-PASS_RE = re.compile(r"^.{3,20}$")
-
-
-def valid_password(password):
-    return password and PASS_RE.match(password)
-
-
-EMAIL_RE = re.compile(r'^[\S]+@[\S]+\.[\S]+$')
-
-
-def valid_email(email):
-    return not email or EMAIL_RE.match(email)
 
 
 class Signup(BlogHandler):
@@ -199,7 +145,8 @@ class NewPost(BlogHandler):
             self.redirect('/blog/%s' % str(p.key().id()))
         else:
             error = "subject and content, please!"
-            self.render("newpost.html", subject=subject, content=content, error=error)
+            self.render("newpost.html", subject=subject,
+                        content=content, error=error)
 
 
 class Register(Signup):
