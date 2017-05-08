@@ -5,7 +5,6 @@ import hashlib
 import hmac
 from string import letters
 
-
 import webapp2
 import jinja2
 

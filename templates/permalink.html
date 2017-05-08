@@ -4,6 +4,9 @@
 	<div class="col-md-5">
         <!-- <a href="/deletepost/{{post.key().id()}}">Delete</a> -->
         <a href="/">Back</a>
+        <a href="/blog/{{post.key().id()}}/delete">Delete</a>
+        <a href="/blog/{{post.key().id()}}/edit">Edit</a>
     </div>
   {{post.render() | safe}}
+
 {% endblock %}

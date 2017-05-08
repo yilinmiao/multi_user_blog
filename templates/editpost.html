@@ -1,8 +1,9 @@
+
 {% extends "base.html" %}
 
 {% block content %}
-  <h2>New Post</h2>
-
+<a href="/blog/{{post_id}}">Back</a>
+  <h2>Edit Post</h2>
     <form method="post">
       <label>
         <div>Subject</div>
@@ -15,7 +16,6 @@
       </label>
 
       <div class="error">{{error}}</div>
-
       <input type="submit">
     </form>
 {% endblock %}
